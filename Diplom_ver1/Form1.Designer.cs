@@ -44,14 +44,12 @@
             this.TB_Квалификация = new System.Windows.Forms.TextBox();
             this.TB_ОбластьЗнаний = new System.Windows.Forms.TextBox();
             this.TB_ФормаОбучения = new System.Windows.Forms.TextBox();
-            this.TB_ТипДиплома = new System.Windows.Forms.TextBox();
             this.TB_АкадемическиеПрава = new System.Windows.Forms.TextBox();
             this.TB_ПроффесиональныеПрава = new System.Windows.Forms.TextBox();
             this.TB_ДатыОбучения = new System.Windows.Forms.TextBox();
             this.BTN_СохранитьВорд = new System.Windows.Forms.Button();
             this.TB_БазовыйДокумент = new System.Windows.Forms.TextBox();
             this.BTN_ОткрытьXLSX = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.BTN_ФайлОценки = new System.Windows.Forms.Button();
             this.BTN_Left = new System.Windows.Forms.Button();
             this.BTN_Right = new System.Windows.Forms.Button();
@@ -64,7 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_Диплом.BackColor = System.Drawing.SystemColors.Window;
-            this.TB_Диплом.Location = new System.Drawing.Point(472, 147);
+            this.TB_Диплом.Location = new System.Drawing.Point(481, 147);
             this.TB_Диплом.MaximumSize = new System.Drawing.Size(132, 20);
             this.TB_Диплом.MinimumSize = new System.Drawing.Size(132, 20);
             this.TB_Диплом.Name = "TB_Диплом";
@@ -76,7 +74,7 @@
             this.TB_Приложение.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_Приложение.Location = new System.Drawing.Point(472, 170);
+            this.TB_Приложение.Location = new System.Drawing.Point(481, 170);
             this.TB_Приложение.MaximumSize = new System.Drawing.Size(132, 20);
             this.TB_Приложение.MinimumSize = new System.Drawing.Size(132, 20);
             this.TB_Приложение.Name = "TB_Приложение";
@@ -88,7 +86,7 @@
             this.TB_ДополнениеОт.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_ДополнениеОт.Location = new System.Drawing.Point(714, 170);
+            this.TB_ДополнениеОт.Location = new System.Drawing.Point(766, 170);
             this.TB_ДополнениеОт.MaximumSize = new System.Drawing.Size(132, 20);
             this.TB_ДополнениеОт.MinimumSize = new System.Drawing.Size(132, 20);
             this.TB_ДополнениеОт.Name = "TB_ДополнениеОт";
@@ -100,7 +98,7 @@
             this.TB_ДипломОт.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_ДипломОт.Location = new System.Drawing.Point(714, 147);
+            this.TB_ДипломОт.Location = new System.Drawing.Point(766, 147);
             this.TB_ДипломОт.MaximumSize = new System.Drawing.Size(132, 20);
             this.TB_ДипломОт.MinimumSize = new System.Drawing.Size(132, 20);
             this.TB_ДипломОт.Name = "TB_ДипломОт";
@@ -174,7 +172,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ДлительностьОбучения.Location = new System.Drawing.Point(58, 785);
             this.TB_ДлительностьОбучения.Name = "TB_ДлительностьОбучения";
-            this.TB_ДлительностьОбучения.Size = new System.Drawing.Size(316, 20);
+            this.TB_ДлительностьОбучения.Size = new System.Drawing.Size(482, 20);
             this.TB_ДлительностьОбучения.TabIndex = 15;
             // 
             // TB_ТребованияК_Вступлению
@@ -184,7 +182,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ТребованияК_Вступлению.Location = new System.Drawing.Point(58, 846);
             this.TB_ТребованияК_Вступлению.Name = "TB_ТребованияК_Вступлению";
-            this.TB_ТребованияК_Вступлению.Size = new System.Drawing.Size(825, 20);
+            this.TB_ТребованияК_Вступлению.Size = new System.Drawing.Size(986, 20);
             this.TB_ТребованияК_Вступлению.TabIndex = 17;
             // 
             // TB_УровеньКвалификации
@@ -194,7 +192,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_УровеньКвалификации.Location = new System.Drawing.Point(58, 724);
             this.TB_УровеньКвалификации.Name = "TB_УровеньКвалификации";
-            this.TB_УровеньКвалификации.Size = new System.Drawing.Size(874, 20);
+            this.TB_УровеньКвалификации.Size = new System.Drawing.Size(986, 20);
             this.TB_УровеньКвалификации.TabIndex = 18;
             // 
             // TB_Квалификация
@@ -204,7 +202,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_Квалификация.Location = new System.Drawing.Point(58, 561);
             this.TB_Квалификация.Name = "TB_Квалификация";
-            this.TB_Квалификация.Size = new System.Drawing.Size(632, 20);
+            this.TB_Квалификация.Size = new System.Drawing.Size(840, 20);
             this.TB_Квалификация.TabIndex = 19;
             // 
             // TB_ОбластьЗнаний
@@ -214,7 +212,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ОбластьЗнаний.Location = new System.Drawing.Point(58, 623);
             this.TB_ОбластьЗнаний.Name = "TB_ОбластьЗнаний";
-            this.TB_ОбластьЗнаний.Size = new System.Drawing.Size(120, 20);
+            this.TB_ОбластьЗнаний.Size = new System.Drawing.Size(265, 20);
             this.TB_ОбластьЗнаний.TabIndex = 20;
             // 
             // TB_ФормаОбучения
@@ -224,20 +222,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ФормаОбучения.Location = new System.Drawing.Point(58, 964);
             this.TB_ФормаОбучения.Name = "TB_ФормаОбучения";
-            this.TB_ФормаОбучения.Size = new System.Drawing.Size(32, 20);
+            this.TB_ФормаОбучения.Size = new System.Drawing.Size(265, 20);
             this.TB_ФормаОбучения.TabIndex = 21;
-            // 
-            // TB_ТипДиплома
-            // 
-            this.TB_ТипДиплома.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_ТипДиплома.Enabled = false;
-            this.TB_ТипДиплома.Location = new System.Drawing.Point(58, 1137);
-            this.TB_ТипДиплома.Name = "TB_ТипДиплома";
-            this.TB_ТипДиплома.Size = new System.Drawing.Size(32, 20);
-            this.TB_ТипДиплома.TabIndex = 22;
-            this.TB_ТипДиплома.Text = "Диплом/Diploma";
             // 
             // TB_АкадемическиеПрава
             // 
@@ -246,7 +232,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_АкадемическиеПрава.Location = new System.Drawing.Point(58, 1240);
             this.TB_АкадемическиеПрава.Name = "TB_АкадемическиеПрава";
-            this.TB_АкадемическиеПрава.Size = new System.Drawing.Size(628, 20);
+            this.TB_АкадемическиеПрава.Size = new System.Drawing.Size(764, 20);
             this.TB_АкадемическиеПрава.TabIndex = 23;
             // 
             // TB_ПроффесиональныеПрава
@@ -256,7 +242,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ПроффесиональныеПрава.Location = new System.Drawing.Point(58, 1300);
             this.TB_ПроффесиональныеПрава.Name = "TB_ПроффесиональныеПрава";
-            this.TB_ПроффесиональныеПрава.Size = new System.Drawing.Size(431, 20);
+            this.TB_ПроффесиональныеПрава.Size = new System.Drawing.Size(570, 20);
             this.TB_ПроффесиональныеПрава.TabIndex = 24;
             // 
             // TB_ДатыОбучения
@@ -266,7 +252,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_ДатыОбучения.Location = new System.Drawing.Point(58, 1409);
             this.TB_ДатыОбучения.Name = "TB_ДатыОбучения";
-            this.TB_ДатыОбучения.Size = new System.Drawing.Size(54, 20);
+            this.TB_ДатыОбучения.Size = new System.Drawing.Size(380, 20);
             this.TB_ДатыОбучения.TabIndex = 25;
             // 
             // BTN_СохранитьВорд
@@ -289,7 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_БазовыйДокумент.Location = new System.Drawing.Point(58, 1469);
             this.TB_БазовыйДокумент.Name = "TB_БазовыйДокумент";
-            this.TB_БазовыйДокумент.Size = new System.Drawing.Size(281, 20);
+            this.TB_БазовыйДокумент.Size = new System.Drawing.Size(380, 20);
             this.TB_БазовыйДокумент.TabIndex = 27;
             // 
             // BTN_ОткрытьXLSX
@@ -303,16 +289,6 @@
             this.BTN_ОткрытьXLSX.Text = "Выбрать XLSX файл";
             this.BTN_ОткрытьXLSX.UseVisualStyleBackColor = true;
             this.BTN_ОткрытьXLSX.Click += new System.EventHandler(this.BTN_ОткрытьXLSX_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(218, 1135);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(434, 20);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "<- Это поле пока что автоматически не меняется";
             // 
             // BTN_ФайлОценки
             // 
@@ -370,19 +346,17 @@
             this.AutoScroll = true;
             this.BackgroundImage = global::Diplom_ver1.Properties.Resources.ОсновнойФон;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1191, 605);
+            this.ClientSize = new System.Drawing.Size(1191, 602);
             this.Controls.Add(this.BTN_ТемаДиплома);
             this.Controls.Add(this.BTN_Right);
             this.Controls.Add(this.BTN_Left);
             this.Controls.Add(this.BTN_ФайлОценки);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.BTN_ОткрытьXLSX);
             this.Controls.Add(this.TB_БазовыйДокумент);
             this.Controls.Add(this.BTN_СохранитьВорд);
             this.Controls.Add(this.TB_ДатыОбучения);
             this.Controls.Add(this.TB_ПроффесиональныеПрава);
             this.Controls.Add(this.TB_АкадемическиеПрава);
-            this.Controls.Add(this.TB_ТипДиплома);
             this.Controls.Add(this.TB_ФормаОбучения);
             this.Controls.Add(this.TB_ОбластьЗнаний);
             this.Controls.Add(this.TB_Квалификация);
@@ -431,8 +405,6 @@
         private System.Windows.Forms.TextBox TB_ПроффесиональныеПрава;
         private System.Windows.Forms.TextBox TB_ДатыОбучения;
         private System.Windows.Forms.TextBox TB_БазовыйДокумент;
-        private System.Windows.Forms.TextBox TB_ТипДиплома;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BTN_ФайлОценки;
         private System.Windows.Forms.Button BTN_Left;
         private System.Windows.Forms.Button BTN_Right;

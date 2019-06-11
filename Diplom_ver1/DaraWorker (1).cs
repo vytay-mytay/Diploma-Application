@@ -10,11 +10,11 @@ namespace Diplom_ver1
 
     internal class DataWorker
     {
-
+        // создаем класс для работы с данными
         Data_Storage data = new Data_Storage();
         
         // открываем эксель таблицу
-        public void OpenXLSX(string funkName)
+        public bool OpenXLSX(string funkName)
         {
             var choofdlog = new OpenFileDialog
             {
@@ -30,35 +30,35 @@ namespace Diplom_ver1
             else
             {
                 MessageBox.Show("Вы не выбрали файл");
-                return;
+                return true;
             }
 
             try
             {
                 switch (funkName)
                 {
-                case "Information":
-                    data.Worksheet = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
-                    break; 
-                case "Raiting":
-                    data.WorksheetRaiting = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
-                    return;
-                case "Diplom":
-                    data.WorksheetDiplom = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
-                    return;
-                //default:
-                //    Console.WriteLine("default");
-                //    break;
+
+                    case "Information":
+                        data.Worksheet = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
+                        FromXLSL_toForm();
+                        break;
+                    case "Raiting":
+                        data.WorksheetRaiting = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
+                        break;
+                    case "Diplom":
+                        data.WorksheetDiplom = new ClosedXML.Excel.XLWorkbook(data.FileName).Worksheets.First();
+                        break;
                 }      
             }
             catch (Exception)
             {
                 MessageBox.Show("Не могу открыть XLSX файл");
-                return;
+                return true;
             }
-            FromXLSL_toForm();
+            return false;
         }
 
+        // записывает путь файла-основы
         public bool OpenOsnova()
         {
             var choofdlog = new OpenFileDialog
@@ -81,6 +81,7 @@ namespace Diplom_ver1
             }
         }
 
+        // выбирает куда сохранить ворд файл и создает копию файла 
         public void OpenWord()
         {
             data.Document = null;
@@ -108,7 +109,7 @@ namespace Diplom_ver1
             catch(Exception e)
             {
                 MessageBox.Show("Не смогло выбрать, куда сохрянять файл. Зовите Витю");
-                ErrorLog(e);
+                //ErrorLog(e);
             }
 
             try
@@ -118,7 +119,7 @@ namespace Diplom_ver1
             catch(Exception e)
             {
                 MessageBox.Show("Не смогло создат файл по выбраному пути. \nПопробуйте выбрать другую папку, еслди это не поможет, то зовите Витю");
-                ErrorLog(e);
+                //ErrorLog(e);
                 return;
             }
 
@@ -140,17 +141,14 @@ namespace Diplom_ver1
                 data.Application = null;
                 File.Delete(fileName);
                 MessageBox.Show("Не могу открыть Word-файл, зовите Витю");
-                ErrorLog(e);
+                //ErrorLog(e);
                 return;
             }
             DropToWord();
         }
-
-        //public bool Check()
-        // по идеи он и не нужен, если в случае не выбора файла - выходить из метода
-
+        
         // записываем из эксель файла в список с строками
-        public bool FromXLSL_toForm()
+        private bool FromXLSL_toForm()
         {
             if (data.Worksheet.Cell(data.Iterator, "E").Value.ToString() == "" && data.Worksheet.Cell(data.Iterator + 1, "E").Value.ToString() == "") 
             {
@@ -160,47 +158,50 @@ namespace Diplom_ver1
             }
             try
             {
-                /*TB_Фамилия.Text */data.Information.Add(data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[0].ToString());
-                /*TB_ИмяОтчество.Text*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[1].ToString() + " " + data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[2]);
-                /*TB_FamilyName.Text*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "M").Value.ToString().Split(new char[] { ' ' })[0].ToString());
-                /*TB_Name.Text */ data.Information.Add(data.Worksheet.Cell(data.Iterator, "M").Value.ToString().Split(new char[] { ' ' })[1].ToString());
+                data.Information.Clear();
+                /*0 - Фамилия*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[0].ToString());
+                /*1 - ИмяОтчество*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[1].ToString() + " " + data.Worksheet.Cell(data.Iterator, "E").Value.ToString().Split(new char[] { ' ' })[2]);
+                /*2 - FamilyName*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "M").Value.ToString().Split(new char[] { ' ' })[0].ToString());
+                /*3 - Name*/ data.Information.Add(data.Worksheet.Cell(data.Iterator, "M").Value.ToString().Split(new char[] { ' ' })[1].ToString());
 
-                /*TB_ДатаРождения.Text*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "F").Value.ToString().Split(new char[] { ' ' })[0].ToString());
+                /*4 - ДатаРождения*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "F").Value.ToString().Split(new char[] { ' ' })[0].ToString());
                 
                 if (data.Worksheet.Cell(data.Iterator, "S").Value.ToString() == "Магістр")
                 {
                     data.proff = Find_proff(data.Worksheet_Baza_Mg, data.Worksheet.Cell(data.Iterator, "Y").Value.ToString().Split(new char[] { ' ' })[0]);
-                    /*TB_Квалификация.Text*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "C").Value.ToString());
-                    /*TB_УровеньКвалификации.Text*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "D").Value.ToString());
-                    /*TB_ДлительностьОбучения.Text*/data.Information.Add("Тут она по хитрому считается@уточнить!!!!");
-                    /*TB_ТребованияК_Вступлению.Text*/data.Information.Add("И тут всё узнать@!!!!!!");
+                    /*5 - Квалификация*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "C").Value.ToString());
+                    /*6 - УровеньКвалификации.Text*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "D").Value.ToString());
+                    /*7 - ДлительностьОбучения.Text*/data.Information.Add("1 рік 5 місяців, денна форма навчання (90.00 кредитів ЄКТС) @1 year 5 months, full-time form of studies (90.00 credits ECTS)");
+                    /*8 - ТребованияК_Вступлению.Text*/data.Information.Add("Перший(бакалаврський) рівень вищої освіти; освітньо - кваліфікаційний рівень спеціаліст. Вступ здійснюється за результатами вступних випробовувань.@The first(bachelor's) level of higher education; educational qualification level specialist.The introduction is based on the results of entrance examinations");
 
-                    /*TB_АкадемическиеПрава.Text*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "E").Value.ToString());
-                    /*TB_ПроффесиональныеПрава.Text*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "F").Value.ToString());
+                    /*9 - АкадемическиеПрава*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "E").Value.ToString());
+                    /*10 - ПроффесиональныеПрава*/data.Information.Add(data.Worksheet_Baza_Mg.Cell(data.proff, "F").Value.ToString());
 
-                    /*TB_БазовыйДокумент.Text*/data.Information.Add(data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[0] + "@Diploma of Bachelor " + (data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString()[0] == ' ' ? data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Substring(1).Replace(" ", " № ") : data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Replace(" ", " № ")));
+                    /*11 - БазовыйДокумент*/data.Information.Add(data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[0] + "/Diploma of Bachelor " + (data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString()[0] == ' ' ? data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Substring(1).Replace(" ", " № ") : data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Replace(" ", " № ")));
+                    /*12 - */data.Information.Add("Тема магістерської дипломної роботи");
+                    /*13 - */data.Information.Add("The theme of master’s paper");
                 }
                 else
                 {
                     data.proff = Find_proff(data.Worksheet_Baza_Bk, data.Worksheet.Cell(data.Iterator, "Y").Value.ToString().Split(new char[] { ' ' })[0]);
-                    /*TB_Квалификация.Text*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "C").Value.ToString());
-                    /*TB_УровеньКвалификации.Text*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "D").Value.ToString());
-                    /*TB_ДлительностьОбучения.Text*/data.Information.Add("Тут она по хитрому считается@уточнить!!!!");
-                    /*TB_ТребованияК_Вступлению.Text*/data.Information.Add("И тут всё узнать@!!!!!!");
+                    /*5 - Квалификация*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "C").Value.ToString());
+                    /*6 - УровеньКвалификации*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "D").Value.ToString());
+                    /*7 - ДлительностьОбучения*/data.Information.Add("Тут она по хитрому считается@уточнить!!!!");
+                    /*8 - ТребованияК_Вступлению*/data.Information.Add("И тут всё узнать@!!!!!!");
 
-                    /*TB_АкадемическиеПрава.Text*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "E").Value.ToString());
-                    /*TB_ПроффесиональныеПрава.Text*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "F").Value.ToString());
+                    /*9 - АкадемическиеПрава*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "E").Value.ToString());
+                    /*10 - ПроффесиональныеПрава*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "F").Value.ToString());
 
-                    //Ниже всё очень запутано и тоже надо уточнить версию с 5 вариантами
-                    /*TB_БазовыйДокумент.Text*/data.Information.Add(data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[0].ToString() + "@Atestat of complete secondary education " + (data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString()[0] == ' ' ? data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Substring(1).Replace(" ", " № ") : data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Replace(" ", " № ")));
+                    /*11 - БазовыйДокумент*/data.Information.Add(data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[0].ToString() + "/Atestat of complete secondary education " + (data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString()[0] == ' ' ? data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Substring(1).Replace(" ", " № ") : data.Worksheet.Cell(row: data.Iterator, column: "AO").Value.ToString().Split(new char[] { ';' })[1].ToString().Replace(" ", " № ")));
+                    /*12 - */data.Information.Add("Тема дипломної роботи");
+                    /*13 - */data.Information.Add("Thema of diploma work");
                 }
 
-                /*TB_ОбластьЗнаний.Text*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "B").Value.ToString());
+                /*14 - ОбластьЗнаний*/data.Information.Add(data.Worksheet_Baza_Bk.Cell(data.proff, "B").Value.ToString());
 
-                /*TB_ФормаОбучения.Text*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "U").Value.ToString()=="Заочна"?"Заочна@Part-time" : "Денна@Full-time");
+                /*15 - ФормаОбучения*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "U").Value.ToString()=="Заочна"?"Заочна@Part-time" : "Денна@Full-time");
 
-                /*TB_ДатыОбучения.Text*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "P").Value.ToString().Split(new char[] { ' ' })[0] + "-" + data.Worksheet.Cell(data.Iterator, "Q").Value.ToString().Split(new char[] { ' ' })[0]);
-
+                /*16 - ДатыОбучения*/data.Information.Add(data.Worksheet.Cell(data.Iterator, "P").Value.ToString().Split(new char[] { ' ' })[0] + "-" + data.Worksheet.Cell(data.Iterator, "Q").Value.ToString().Split(new char[] { ' ' })[0]);
             }
             catch (Exception e)
             {
@@ -213,7 +214,8 @@ namespace Diplom_ver1
         }
 
         public List<string> InformationReturn() => data.Information;
-
+        
+        // ищет номер специальности
         private int Find_proff(ClosedXML.Excel.IXLWorksheet baza, string kod)
         {
             int iterator = 2;
@@ -233,6 +235,7 @@ namespace Diplom_ver1
         // записывает в ворд файл
         public void DropToWord()
         {
+            ThemeOfDiploma();
             try
             {
                 data.Bookmarks = data.Document.Bookmarks;
@@ -240,39 +243,40 @@ namespace Diplom_ver1
             catch(Exception e)
             {
                 MessageBox.Show("Не смогло создать закладки. Зовите Витю");
-                ErrorLog(e);
+                //rrorLog(e);
                 return;
             }
-
+            
             try
             {
-                data.Bookmarks[22].Range.Text = /*14 TB_ФормаОбучения.Text*/data.Information[13].Split(new char[] { '@' })[0] + "\n" + data.Information[13].Split(new char[] { '@' })[1];
-                data.Bookmarks[21].Range.Text = /*1 TB_Фамилия.Text*/data.Information[0];
-                data.Bookmarks[20].Range.Text = /*3 TB_FamilyName.Text*/data.Information[2];
-                data.Bookmarks[19].Range.Text = /*7 TB_УровеньКвалификации.Text*/ data.Information[6].Split(new char[] { '@' })[0] + "\n" + data.Information[6].Split(new char[] { '@' })[1];
-                data.Bookmarks[18].Range.Text = /*9 TB_ТребованияК_Вступлению.Text*/data.Information[8].Split(new char[] { '@' })[0] + "\n" + data.Information[8].Split(new char[] { '@' })[1];
-                data.Bookmarks[17].Range.Text = /*11 TB_ПроффесиональныеПрава.Text*/data.Information[10].Split(new char[] { '@' })[0] + "\n" + data.Information[10].Split(new char[] { '@' })[1];
+                data.Bookmarks[24].Range.Text = data.Information[15].Split(new char[] { '@' })[0] + "\n" + data.Information[15].Split(new char[] { '@' })[1];
+                data.Bookmarks[23].Range.Text = data.Information[0];
+                data.Bookmarks[22].Range.Text = data.Information[2];
+                data.Bookmarks[21].Range.Text = data.Information[6].Split(new char[] { '@' })[0] + "\n" + data.Information[6].Split(new char[] { '@' })[1];
+                data.Bookmarks[20].Range.Text = data.Information[8].Split(new char[] { '@' })[0] + "\n" + data.Information[8].Split(new char[] { '@' })[1];
+                data.Bookmarks[19].Range.Text = data.Information[12];
+                data.Bookmarks[18].Range.Text = data.Information[13];
+                data.Bookmarks[17].Range.Text = data.Information[10].Split(new char[] { '@' })[0] + "\n" + data.Information[10].Split(new char[] { '@' })[1];
                 data.Bookmarks[16].Range.Text = ""; // от какого додаток
                 data.Bookmarks[15].Range.Text = ""; // от какого диплом
-                data.Bookmarks[14].Range.Text = /*6 TB_Квалификация.Text*/data.Information[5].Split(new char[] { '@' })[0] + "\n" + data.Information[5].Split(new char[] { '@' })[1];
-                data.Bookmarks[13].Range.Text = /*2 TB_ИмяОтчество.Text*/data.Information[1];
-                data.Bookmarks[12].Range.Text = /*4 TB_Name.Text*/data.Information[3];
+                data.Bookmarks[14].Range.Text = data.Information[5].Split(new char[] { '@' })[0] + "\n" + data.Information[5].Split(new char[] { '@' })[1];
+                data.Bookmarks[13].Range.Text = data.Information[1];
+                data.Bookmarks[12].Range.Text = data.Information[3];
                 data.Bookmarks[11].Range.Text = ""; // додаток
-                data.Bookmarks[10].Range.Text = /*8 TB_ДлительностьОбучения.Text*/data.Information[7].Split(new char[] { '@' })[0] + "\n" + data.Information[7].Split(new char[] { '@' })[1];
+                data.Bookmarks[10].Range.Text = data.Information[7].Split(new char[] { '@' })[0] + "\n" + data.Information[7].Split(new char[] { '@' })[1];
                 data.Bookmarks[9].Range.Text = data.WorksheetDiplom.Cell(data.n, 2).Value.ToString().Split(new char[] { '@' })[0] + "/";
-                //data.Bookmarks[8].Range.Text = data.WorksheetDiplom.Cell(data.n, 2).Value.ToString().Split(new char[] { '@' })[1];
+                data.Bookmarks[8].Range.Text = data.WorksheetDiplom.Cell(data.n, 2).Value.ToString().Split(new char[] { '@' })[1];
                 data.Bookmarks[7].Range.Text = ""; //диплом
-                data.Bookmarks[6].Range.Text = /*15 TB_ДатыОбучения.Text*/data.Information[14];
-                data.Bookmarks[5].Range.Text = /*5 TB_ДатаРождения.Text*/data.Information[4];
-                data.Bookmarks[4].Range.Text = /*13 TB_ОбластьЗнаний.Text*/data.Information[12].Split(new char[] { '@' })[0] + "\n" + data.Information[12].Split(new char[] { '@' })[1];
+                data.Bookmarks[6].Range.Text = data.Information[16];
+                data.Bookmarks[5].Range.Text = data.Information[4];
+                data.Bookmarks[4].Range.Text = data.Information[14].Split(new char[] { '@' })[0] + "\n" + data.Information[14].Split(new char[] { '@' })[1];
                 data.Bookmarks[3].Range.Text = "Диплом/Diploma";
-                data.Bookmarks[2].Range.Text = /*12 TB_БазовыйДокумент.Text*/data.Information[11];
-                data.Bookmarks[1].Range.Text = /*10 TB_АкадемическиеПрава.Text*/data.Information[9].Split(new char[] { '@' })[0] + "\n" + data.Information[9].Split(new char[] { '@' })[1];
-
-                //может быть это не уменьшит время выполнения, но попробывать сделать метод, который всё это вносит в какой-то List<string> DataToWord
+                data.Bookmarks[2].Range.Text = data.Information[11];
+                data.Bookmarks[1].Range.Text = data.Information[9].Split(new char[] { '@' })[0] + "\n" + data.Information[9].Split(new char[] { '@' })[1];
             }
             catch (Exception e)
             {
+                data.Information.Clear();
                 data.Document.Close(SaveChanges: ref data.falseObj, OriginalFormat: ref data.missingObj, RouteDocument: ref data.missingObj);
                 data.Application.Quit(SaveChanges: ref data.missingObj, OriginalFormat: ref data.missingObj, RouteDocument: ref data.missingObj);
                 data.Document= null;
@@ -282,7 +286,6 @@ namespace Diplom_ver1
                 return;
             }
 
-            ThemeOfDiploma();
             MakeTable();
 
             data.Application.Visible = true;
@@ -291,6 +294,7 @@ namespace Diplom_ver1
             FromXLSL_toForm();
         }
 
+        // открывает сводную ведомость и ищет там нужного студента
         public void MakeTable()
         {
             if (data.WorksheetRaiting == null) 
@@ -311,19 +315,19 @@ namespace Diplom_ver1
                     }
                     else { cell_row++; }
                 } while (data.WorksheetRaiting.Cell(cell_row, 3).Value.ToString()!=""&&data.WorksheetRaiting.Cell(cell_row+1, 3).Value.ToString()!="");
-                // х*й его знает как,но оно берёт номер страницы на котором таблица - это надо для того, чтобы сделать таблицу на следующей странице
+                // оно берёт номер страницы на котором таблица - это надо для того, чтобы сделать таблицу на следующей странице
                 //table.Cell(1, 1).Range.Text = table.Cell(1, 1).Range.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber].ToString();
             }
             catch (Exception e)
             {
                 MessageBox.Show("Не нашло " + data.Information[0] + " " + data.Information[1] + "в сводной ведомости");               
-                ErrorLog(e);
+                //ErrorLog(e);
                 return;
             }
             From_Excel_to_word(cell_row, data.Document.Tables[4]);
         }
 
-        // достаёт оценки из сводной ведомости
+        // достаёт оценки из сводной ведомости и записывает их в таблицу в выходном файле
         private void From_Excel_to_word(int cell_row, Table table)
         {
             int iterator = 1;
@@ -430,6 +434,7 @@ namespace Diplom_ver1
                 table.Cell(i, x).Range.Bold = 0;
         }
 
+        // находит номер строки для темы диплома
         private void ThemeOfDiploma()
         {
             if (data.WorksheetDiplom == null)
@@ -448,7 +453,7 @@ namespace Diplom_ver1
                     }
                     else { data.n++; }
                 } while (data.WorksheetDiplom.Cell(data.n,1).Value.ToString()!=""&& data.WorksheetDiplom.Cell(data.n+1, 1).Value.ToString() != "");
-                // х*й его знает как,но оно берёт номер страницы на котором таблица - это надо для того, чтобы сделать таблицу на следующей странице
+                //оно берёт номер страницы на котором таблица - это надо для того, чтобы сделать таблицу на следующей странице
                 //table.Cell(1, 1).Range.Text = table.Cell(1, 1).Range.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber].ToString();
             }
             catch (Exception e)
@@ -459,7 +464,7 @@ namespace Diplom_ver1
             }
         }
 
-        // всё-таки попробовать сделать через case
+        // метод для таблицы с оценками; возвращает национальную шкалу и ETCS оценку
         private string[] ConvertToLetters(string str)
         {
             switch (Convert.ToInt32(str))
@@ -488,36 +493,6 @@ namespace Diplom_ver1
                 default:
                     return new string[] { "-/-", "-" };
             }
-
-            /* if (Convert.ToInt32(str) >= 90)
-            {
-                return new string[] { "Відммінно/Excelent", "A" };
-            }
-            else if (Convert.ToInt32(str) >= 82)
-            {
-                return new string[] { "Добре/Good", "B" };
-            }
-            else if (Convert.ToInt32(str) >= 74)
-            {
-                return new string[] { "Добре/Good", "С" };
-            }
-            else if (Convert.ToInt32(str) >= 64)
-            {
-                return new string[] { "Задовільно/Satisfactory", "D" };
-            }
-            else if (Convert.ToInt32(str) >= 60)
-            {
-                return new string[] { "Задовільно/Satisfactory", "E" };
-            }
-            else if (Convert.ToInt32(str) >= 35)
-            {
-                return new string[] { "Незадовільно/Unsatisfactory", "FX" };
-            }
-            else if (Convert.ToInt32(str) >= 1)
-            {
-                return new string[] { "Незадовільно/Unsatisfactory", "F" };
-            }
-            return new string[] { "-/-", "-" };*/
         }
 
         private void ErrorLog(Exception e)
@@ -541,7 +516,7 @@ namespace Diplom_ver1
                 if (data.Iterator != 2)
                 {
                     data.Iterator--;
-                    data.Information.Clear();
+                    //data.Information.Clear();
                     FromXLSL_toForm();
                     return false;
                 }
@@ -556,9 +531,9 @@ namespace Diplom_ver1
             if(data.Worksheet!=null)
             {
                 data.Iterator++;
-                data.Information.Clear();
+                //data.Information.Clear();
                 if (FromXLSL_toForm())
-                { return true; }
+                { return false; }
 
                 return false;
             }
