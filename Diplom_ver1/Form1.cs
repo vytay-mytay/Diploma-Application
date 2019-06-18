@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
-using System.Reflection;
-using ClosedXML;
-using System.IO;
-using Microsoft.Office.Interop.Word;
 
 namespace Diplom_ver1
 {
@@ -23,8 +12,8 @@ namespace Diplom_ver1
         {
             InitializeComponent();
             DoubleBuffered = true;
-            if (dataWorker.OpenOsnova())
-                Close();
+            //if (dataWorker.OpenOsnova())
+            //    Close();
         }
 
         private void BTN_ОткрытьXLSX_Click(object sender, EventArgs e)
@@ -59,7 +48,8 @@ namespace Diplom_ver1
         private void BTN_СохранитьВорд_Click(object sender, EventArgs e)
         {
             dataWorker.OpenWord();
-            ToForm(dataWorker.InformationReturn());
+            if (dataWorker.InformationReturn() == null)
+                ToForm(dataWorker.InformationReturn());
         }
 
         private void BTN_ФайлОценки_Click(object sender, EventArgs e)
@@ -86,5 +76,11 @@ namespace Diplom_ver1
         {
             dataWorker.OpenXLSX("Diplom");
         }
-    }
-}
+
+        private void BTN_ПутьСохран_Click(object sender, EventArgs e)
+        {
+            dataWorker.TakePath();
+        }
+                       
+    }                           
+}                               

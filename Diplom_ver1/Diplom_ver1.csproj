@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Основа.doc" />
+    <None Include="Resources\Основа.docx" />
     <None Include="Resources\Основной фон.jpg" />
   </ItemGroup>
   <ItemGroup>

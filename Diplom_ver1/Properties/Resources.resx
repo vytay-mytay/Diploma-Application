@@ -130,16 +130,13 @@
   <data name="arrow_34_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-34-48.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Основа" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Основа.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="arrow_98_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\arrow-98-48.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="arrow-98-481" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-98-482.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Основа1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Основа.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Основа2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Основа.docx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

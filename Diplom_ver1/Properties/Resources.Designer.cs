@@ -93,19 +93,9 @@ namespace Diplom_ver1.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
-        internal static byte[] Основа {
+        internal static byte[] Основа2 {
             get {
-                object obj = ResourceManager.GetObject("Основа", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        internal static byte[] Основа1 {
-            get {
-                object obj = ResourceManager.GetObject("Основа1", resourceCulture);
+                object obj = ResourceManager.GetObject("Основа2", resourceCulture);
                 return ((byte[])(obj));
             }
         }

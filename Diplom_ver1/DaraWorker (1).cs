@@ -86,47 +86,32 @@ namespace Diplom_ver1
         {
             data.Document = null;
             data.Application = null;
-            string fileName = "";
-            
-            try
-            {
-                using (var fbd = new FolderBrowserDialog())
-                {
-                    fbd.RootFolder = Environment.SpecialFolder.Desktop;
-                    fbd.Description = "Куда сохранить файл?";
 
-                    if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                    {
-                        fileName = fbd.SelectedPath + "\\" + data.Information[0]+ " " + data.Information[1] + ".doc";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Вы не выбрали, куда сохранять файл");
-                        return;
-                    }
-                }
-            }
-            catch(Exception e)
+            if(data.Information.Count < 1)
             {
-                MessageBox.Show("Не смогло выбрать, куда сохрянять файл. Зовите Витю");
-                //ErrorLog(e);
+                MessageBox.Show("Выберите файл со студентами");
+                return;
+            }
+
+            if (data.Path == "") 
+            {
+                TakePath();
             }
 
             try
             {
-                File.WriteAllBytes(path: fileName, bytes: File.ReadAllBytes(data.Osnova_flnm));
+                File.WriteAllBytes(path: data.Path, bytes: Properties.Resources.Основа2);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 MessageBox.Show("Не смогло создат файл по выбраному пути. \nПопробуйте выбрать другую папку, еслди это не поможет, то зовите Витю");
-                //ErrorLog(e);
                 return;
             }
 
             try
             {
                 data.Application = new Microsoft.Office.Interop.Word.Application();
-                data.Document = data.Application.Documents.Open(fileName);
+                data.Document = data.Application.Documents.Open(data.Path);
             }
             catch (Exception e)
             {
@@ -139,9 +124,8 @@ namespace Diplom_ver1
 
                 data.Document = null;
                 data.Application = null;
-                File.Delete(fileName);
+                File.Delete(data.Path);
                 MessageBox.Show("Не могу открыть Word-файл, зовите Витю");
-                //ErrorLog(e);
                 return;
             }
             DropToWord();
@@ -207,7 +191,6 @@ namespace Diplom_ver1
             {
                 MessageBox.Show("Ошибка с записью " + e.Message);
                 data.Worksheet = null;
-                //ErrorLog(e);
                 return false;
             }
             return true;
@@ -282,7 +265,6 @@ namespace Diplom_ver1
                 data.Document= null;
                 data.Application = null;
                 MessageBox.Show(e.Message+" Не могу записать в Word-файл. \n(Или файл-основа стал неправильный и там не хватает закладок или зовите Витю)");
-                //ErrorLog(e);
                 return;
             }
 
@@ -318,10 +300,9 @@ namespace Diplom_ver1
                 // оно берёт номер страницы на котором таблица - это надо для того, чтобы сделать таблицу на следующей странице
                 //table.Cell(1, 1).Range.Text = table.Cell(1, 1).Range.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber].ToString();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                MessageBox.Show("Не нашло " + data.Information[0] + " " + data.Information[1] + "в сводной ведомости");               
-                //ErrorLog(e);
+                MessageBox.Show("Не нашло " + data.Information[0] + " " + data.Information[1] + "в сводной ведомости");
                 return;
             }
             From_Excel_to_word(cell_row, data.Document.Tables[4]);
@@ -495,20 +476,6 @@ namespace Diplom_ver1
             }
         }
 
-        private void ErrorLog(Exception e)
-        {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "error log by "+ DateTime.Now + ".txt";
-            File.Create(path);
-            using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
-            {
-                sw.WriteLine(e.InnerException);
-                sw.WriteLine(e.Message);
-                sw.WriteLine(e.Source);
-                sw.WriteLine(e.StackTrace);
-                sw.WriteLine(e.TargetSite);
-            }
-        }
-
         public bool Left()
         {
             if (data.Worksheet != null)
@@ -544,6 +511,39 @@ namespace Diplom_ver1
         public void FirstIterator()
         {
             data.Iterator = 2;
+        }
+
+        public void TakePath()
+        {
+            if (data.Information.Count > 0) 
+            {
+                try
+                {
+                    using (var fbd = new FolderBrowserDialog())
+                    {
+                        fbd.RootFolder = Environment.SpecialFolder.Desktop;
+                        fbd.Description = "Куда сохранить файл?";
+
+                        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                        {
+                            data.Path = fbd.SelectedPath + "\\" + data.Information[0] + " " + data.Information[1] + ".doc";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Вы не выбрали, куда сохранять файл");
+                            return;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Не смогло выбрать, куда сохрянять файл. Зовите Витю");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Сначала выберите файл со студентами");
+            }
         }
     }
 }

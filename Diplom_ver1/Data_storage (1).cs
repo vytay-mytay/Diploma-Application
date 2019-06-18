@@ -1,4 +1,3 @@
-using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
 using Microsoft.Office.Interop.Word;
 using System.Collections.Generic;
@@ -46,5 +45,7 @@ namespace Diplom_ver1
 
         private List<string> information = new List<string>();
         public List<string> Information { get => information; set => information = value; }
+
+        public string Path = "";
     }
 }
